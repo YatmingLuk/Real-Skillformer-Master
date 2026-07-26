@@ -109,16 +109,16 @@ Output MP4 videos will be saved in `vis_results/rolling_<token>_iter000-XXX.mp4`
 ### 2. Qualitative Visualization Performance
 Sample qualitative evaluation across continuous rolling NuPlan validation scenarios:
 
-| Scenario Index | Scenario Type | Duration / Frames | Skill RMSE ↓ | Mean Prediction ADE ↓ | Video Output |
+| Scenario Index | Scenario Type | Duration / Frames | Skill RMSE ↓ | Mean Prediction ADE ↓ | Rolling Prediction Visual Demo |
 | :---: | :--- | :---: | :---: | :---: | :--- |
-| **Index 0** | `waiting_for_pedestrian_to_cross` | 11.9s (120 frames) | **0.4087** | **0.9053m** | `vis_results/rolling_005fd0f78d2c_iter000-119.mp4` |
-| **Index 5** | `starting_protected_cross_turn` | 12.0s (121 frames) | **0.6916** | **1.9155m** | `vis_results/rolling_05ef783070ba_iter000-120.mp4` |
-| **Index 10** | `stationary` | 11.9s (120 frames) | **0.3376** | **0.6476m** | `vis_results/rolling_0ad5ecead7d0_iter000-119.mp4` |
-| **Index 15** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.4988** | **1.1970m** | `vis_results/rolling_1004149342b8_iter000-119.mp4` |
-| **Index 20** | `waiting_for_pedestrian_to_cross` | 11.9s (120 frames) | **0.3576** | **0.7991m** | `vis_results/rolling_136a2f54e24f_iter000-119.mp4` |
-| **Index 50** | `stationary` | 12.0s (121 frames) | **0.0525** | **0.0195m** | `vis_results/rolling_367739b91917_iter000-120.mp4` |
-| **Index 100** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.1990** | **0.4396m** | `vis_results/rolling_69e109f6e2a8_iter000-119.mp4` |
-| **Index 200** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.5068** | **1.1995m** | `vis_results/rolling_c5fb9629a6ee_iter000-119.mp4` |
+| **Index 0** | `waiting_for_pedestrian_to_cross` | 11.9s (120 frames) | **0.4087** | **0.9053m** | ![Index 0 Demo](assets/demo_index0.gif) |
+| **Index 5** | `starting_protected_cross_turn` | 12.0s (121 frames) | **0.6916** | **1.9155m** | ![Index 5 Demo](assets/demo_index5.gif) |
+| **Index 10** | `stationary` | 11.9s (120 frames) | **0.3376** | **0.6476m** | ![Index 10 Demo](assets/demo_index10.gif) |
+| **Index 15** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.4988** | **1.1970m** | ![Index 15 Demo](assets/demo_index15.gif) |
+| **Index 20** | `waiting_for_pedestrian_to_cross` | 11.9s (120 frames) | **0.3576** | **0.7991m** | ![Index 20 Demo](assets/demo_index20.gif) |
+| **Index 50** | `stationary` | 12.0s (121 frames) | **0.0525** | **0.0195m** | ![Index 50 Demo](assets/demo_index50.gif) |
+| **Index 100** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.1990** | **0.4396m** | ![Index 100 Demo](assets/demo_index100.gif) |
+| **Index 200** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.5068** | **1.1995m** | ![Index 200 Demo](assets/demo_index200.gif) |
 > 💡 **Visualization Output Note**: 
 > - Skill distribution plots and heatmaps are saved under `output/skill_visualization/`.
 > - Rolling scene video inference reconstructs a new model input at every 10Hz NuPlan iteration, rendering continuous predictions and saving 8-D skill time series as PNG/CSV/NPZ.
