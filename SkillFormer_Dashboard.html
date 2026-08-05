@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>SkillFormer & Wayformer 实验与可视化报告</title>
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: #ffffff;
+        color: #1e293b;
+        margin: 0;
+        padding: 40px;
+    }
+    .wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    header {
+        background: #0f172a;
+        color: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+    h1 {
+        margin: 0 0 10px 0;
+        color: #38bdf8;
+        font-size: 28px;
+    }
+    .subtitle {
+        color: #94a3b8;
+        font-size: 14px;
+    }
+    /* 30秒核心摘要高亮框 */
+    .executive-summary {
+        background: #f0f9ff;
+        border: 2px solid #0284c7;
+        border-radius: 10px;
+        padding: 22px 25px;
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+    .executive-summary h2 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: #0369a1;
+        font-size: 18px;
+        border-bottom: 1px solid #bae6fd;
+        padding-bottom: 6px;
+    }
+    .executive-summary ul {
+        margin: 5px 0 15px 0;
+        padding-left: 20px;
+        color: #334155;
+    }
+    .meta-tags {
+        display: flex;
+        gap: 20px;
+        background: #e0f2fe;
+        padding: 10px 15px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #0369a1;
+        font-weight: 600;
+    }
+    .section-title {
+        font-size: 20px;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 8px;
+        margin: 30px 0 20px 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 20px;
+    }
+    .card {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        overflow: hidden;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    .card-title {
+        background: #f1f5f9;
+        padding: 10px 15px;
+        font-weight: 600;
+        font-size: 14px;
+        border-bottom: 1px solid #cbd5e1;
+        color: #334155;
+    }
+    .card img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .card-footer {
+        padding: 8px 15px;
+        font-size: 11px;
+        color: #64748b;
+    }
+    .readme-box {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+    .readme-box pre {
+        white-space: pre-wrap;
+        word-break: break-all;
+        font-family: 'Courier New', Courier, monospace;
+        color: #334155;
+        background: #f1f5f9;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #cbd5e1;
+    }
+</style>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <h1>SkillFormer — 实验结果与可视化报告</h1>
+        <div class="subtitle">项目名称: Real-Skillformer | 目标评审: Prof. Chi-Sheng Shih | 场景编码: Wayformer</div>
+    </header>
+
+    <div class="executive-summary">
+        <h2>🎯 Executive Summary</h2>
+        <p style="margin: 0 0 10px 0; color: #0f172a;"><strong>Objective:</strong> Improve Wayformer-based trajectory prediction through latent skill representation.</p>
+        <p style="margin: 0 0 5px 0; color: #0f172a;"><strong>My Contribution:</strong></p>
+        <ul>
+            <li>Reproduced Wayformer-NuPlan pipeline</li>
+            <li>Implemented SkillFormer-based modification</li>
+            <li>Conducted training and evaluation experiments</li>
+            <li>Analyzed trajectory prediction performance</li>
+        </ul>
+        <div class="meta-tags">
+            <span>📌 Dataset: NuPlan</span>
+            <span>📊 Metrics: minADE / minFDE / Miss Rate</span>
+        </div>
+    </div>
+
+    <div class="readme-box">
+        <h2 style="margin-top:0; color:#0f172a;">📝 项目详细说明与核心配置 (README Details)</h2>
+        <pre># SkillFormer — Single-mode Skill Regression
+
+Wayformer scene encoding followed by a single VAE-latent regression head. The
+model is trained only with direct skill-space supervision.
+---
+## 🛠️ Environment Setup & Environment Prerequisites
+
+### System Requirements
+- **OS**: Windows Subsystem for Linux 2 (WSL2) — **Ubuntu 22.04 LTS**
+- **Python**: `3.9`
+- **Conda Environment**: `wayformer`
+- **External Dependencies**: `ffmpeg` (required for rendering rolling scene videos)
+
+### 1. Create and Activate Conda Environment
+```bash
+conda create -n wayformer python=3.9 -y
+conda activate wayformer
+```
+### 2. Install Dependencies
+```bash
+# Install PyTorch Lightning & core packages
+pip install pytorch-lightning tqdm matplotlib
+
+# Install system dependency for MP4 video export
+sudo apt update && sudo apt install -y ffmpeg
+```
+⚠️ Note for WSL Users (Multiprocessing Fix):
+In WSL2 environments, Python multi-processing (multiprocessing.Process / mp.Queue) may lock up when interacting with C++ database handles (NuPlan map API).
+If dataset processing hangs, ensure SingleMachineParallelExecutor(use_process_pool=False) is set in Wayformer/wf_dataset.py for single-thread sequential processing.
+---
+## Architecture
+
+```
+Scene → Wayformer Encoder → single learned query
+                              │
+                     TransformerDecoder
+                              │
+                       embedding [256]
+                              │
+                       Linear(256→8)
+                              │
+                         z_pred [8]
+                              │
+              ┌───────────────┴────────────────┐
+              │                                │
+      normalized MSE                  frozen VAE.decode
+              │                                │
+GT trajectory → frozen VAE.encode             trajectory [30,2]
+              │
+           mu_gt [8]
+```
+
+- **Single-mode output**: One scene produces one 8-D skill latent (`z_pred`) and one trajectory (30 time steps, $(x,y)$ coordinates).
+- **Frozen VAE**: The VAE encoder and decoder are frozen during training.
+- **Direct Skill Supervision**: Training loss is strictly normalized MSE(`z_pred`, `mu_gt`). VAE decoding is used only during prediction/evaluation.
+
+Old multi-modal checkpoints and their reported metrics are not compatible with
+this architecture. Retraining is required.
+---
+## 🚀 Quick Start Pipeline
+
+### 1. Model Training
+Run training on the NuPlan dataset (configured via JSON):
+```bash
+python train_wf.py --config_dir config/wayformer.1.json
+```
+Checkpoints and logs will be saved automatically under `output/wayformer.skill_only/version_X/checkpoints/`.
+
+### 2. Evaluation
+Evaluate the trained model on the validation set using the best checkpoint (e.g. Lowest val_loss):
+```bash
+python eval.py --ckpt output/wayformer.skill_only/version_2/checkpoints/epoch=52-val_loss=0.0449.ckpt
+```
+Evaluation metrics will be written to `eval_result.txt`.
+
+### 3. Skill & Trajectory Visualization
+#### A. Compare Inferred Skills against GT (Distribution / Latents)
+```bash
+python visualize_skills.py \
+  --ckpt output/wayformer.skill_only/version_2/checkpoints/epoch=52-val_loss=0.0449.ckpt \
+  --mode val \
+  --max-samples 256
+```
+Outputs dashboard PNGs, error heatmaps, and stats CSV under `output/skill_visualization/`.
+#### B. Rolling Scene Inference & Video Generation
+Reconstructs inputs at every NuPlan iteration (10Hz) to generate continuous closed-loop rolling trajectory predictions:
+```bash
+python visualize_rolling_scene_video.py \
+  --ckpt output/wayformer.skill_only/version_2/checkpoints/epoch=52-val_loss=0.0449.ckpt \
+  --mode val \
+  --scene-index 0 \
+  --output-dir vis_results
+```
+Output MP4 videos will be saved in `vis_results/rolling_<token>_iter000-XXX.mp4`.
+
+---
+
+## 📊 Experimental Results
+
+### 1. Quantitative Evaluation Metrics
+*(Results extracted from `eval_result.txt` on NuPlan Validation Set)*
+
+| Model Architecture | Epochs | Val Loss | minADE (m) ↓ | minFDE (m) ↓ | Miss Rate (%) ↓ |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Wayformer Skill-Only (Best Checkpoint)** | 52 / 70 | **0.0449** | **0.2474** | **0.6836** | **5.66%** |
+
+> *Note: Exact metrics — minADE: `0.24739971`, minFDE: `0.68356625`, Miss Rate: `0.056603` (5.66%).*
+
+### 2. Qualitative Visualization Performance
+Sample qualitative evaluation across continuous rolling NuPlan validation scenarios:
+
+| Scenario Index | Scenario Type | Duration / Frames | Skill RMSE ↓ | Mean Prediction ADE ↓ | Rolling Prediction Visual Demo |
+| :---: | :--- | :---: | :---: | :---: | :--- |
+| **Index 0** | `waiting_for_pedestrian_to_cross` | 11.9s (120 frames) | **0.4087** | **0.9053m** | ![Index 0 Demo](assets/demo_index0.gif) |
+| **Index 5** | `starting_protected_cross_turn` | 12.0s (121 frames) | **0.6916** | **1.9155m** | ![Index 5 Demo](assets/demo_index5.gif) |
+| **Index 10** | `stationary` | 11.9s (120 frames) | **0.3376** | **0.6476m** | ![Index 10 Demo](assets/demo_index10.gif) |
+| **Index 15** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.4988** | **1.1970m** | ![Index 15 Demo](assets/demo_index15.gif) |
+| **Index 20** | `waiting_for_pedestrian_to_cross` | 11.9s (120 frames) | **0.3576** | **0.7991m** | ![Index 20 Demo](assets/demo_index20.gif) |
+| **Index 50** | `stationary` | 12.0s (121 frames) | **0.0525** | **0.0195m** | ![Index 50 Demo](assets/demo_index50.gif) |
+| **Index 100** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.1990** | **0.4396m** | ![Index 100 Demo](assets/demo_index100.gif) |
+| **Index 200** | `traversing_traffic_light_intersection` | 11.9s (120 frames) | **0.5068** | **1.1995m** | ![Index 200 Demo](assets/demo_index200.gif) |
+> 💡 **Visualization Output Note**: 
+> - Skill distribution plots and heatmaps are saved under `output/skill_visualization/`.
+> - Rolling scene video inference reconstructs a new model input at every 10Hz NuPlan iteration, rendering continuous predictions and saving 8-D skill time series as PNG/CSV/NPZ.
+
+## Key Config
+
+```json
+{
+  "use_z_norm": true,
+  "z_stats_path": "z_stats.pt",
+  "vae_weight_path": "pth/trajectory_vae_8d_best.pth",
+  "vae_latent_dim": 8,
+  "learning_rate": 0.0003
+}
+```
+</pre>
+    </div>
+
+    <h2 class="section-title">📈 轨迹预测与模型渲染可视化结果 (16 个项)</h2>
+    <div class="grid">
+        
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index0.gif</div>
+        <img src="temp_static_vis/demo_index0_static.png" alt="demo_index0.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index0.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index10.gif</div>
+        <img src="temp_static_vis/demo_index10_static.png" alt="demo_index10.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index10.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index100.gif</div>
+        <img src="temp_static_vis/demo_index100_static.png" alt="demo_index100.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index100.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index15.gif</div>
+        <img src="temp_static_vis/demo_index15_static.png" alt="demo_index15.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index15.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index20.gif</div>
+        <img src="temp_static_vis/demo_index20_static.png" alt="demo_index20.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index20.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index200.gif</div>
+        <img src="temp_static_vis/demo_index200_static.png" alt="demo_index200.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index200.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index5.gif</div>
+        <img src="temp_static_vis/demo_index5_static.png" alt="demo_index5.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index5.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: demo_index50.gif</div>
+        <img src="temp_static_vis/demo_index50_static.png" alt="demo_index50.gif">
+        <div class="card-footer">源文件: <code>assets/demo_index50.gif</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_005fd0f78d2c_iter000-119_skill_timeseries.png</div>
+        <img src="vis_results/rolling_005fd0f78d2c_iter000-119_skill_timeseries.png" alt="rolling_005fd0f78d2c_iter000-119_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_005fd0f78d2c_iter000-119_skill_timeseries.png</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_05ef783070ba_iter000-120_skill_timeseries.png</div>
+        <img src="vis_results/rolling_05ef783070ba_iter000-120_skill_timeseries.png" alt="rolling_05ef783070ba_iter000-120_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_05ef783070ba_iter000-120_skill_timeseries.png</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_0ad5ecead7d0_iter000-119_skill_timeseries.png</div>
+        <img src="vis_results/rolling_0ad5ecead7d0_iter000-119_skill_timeseries.png" alt="rolling_0ad5ecead7d0_iter000-119_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_0ad5ecead7d0_iter000-119_skill_timeseries.png</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_1004149342b8_iter000-119_skill_timeseries.png</div>
+        <img src="vis_results/rolling_1004149342b8_iter000-119_skill_timeseries.png" alt="rolling_1004149342b8_iter000-119_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_1004149342b8_iter000-119_skill_timeseries.png</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_136a2f54e24f_iter000-119_skill_timeseries.png</div>
+        <img src="vis_results/rolling_136a2f54e24f_iter000-119_skill_timeseries.png" alt="rolling_136a2f54e24f_iter000-119_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_136a2f54e24f_iter000-119_skill_timeseries.png</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_367739b91917_iter000-120_skill_timeseries.png</div>
+        <img src="vis_results/rolling_367739b91917_iter000-120_skill_timeseries.png" alt="rolling_367739b91917_iter000-120_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_367739b91917_iter000-120_skill_timeseries.png</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_69e109f6e2a8_iter000-119_skill_timeseries.png</div>
+        <img src="vis_results/rolling_69e109f6e2a8_iter000-119_skill_timeseries.png" alt="rolling_69e109f6e2a8_iter000-119_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_69e109f6e2a8_iter000-119_skill_timeseries.png</code></div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">📊 实验可视化: rolling_c5fb9629a6ee_iter000-119_skill_timeseries.png</div>
+        <img src="vis_results/rolling_c5fb9629a6ee_iter000-119_skill_timeseries.png" alt="rolling_c5fb9629a6ee_iter000-119_skill_timeseries.png">
+        <div class="card-footer">源文件: <code>vis_results/rolling_c5fb9629a6ee_iter000-119_skill_timeseries.png</code></div>
+    </div>
+    
+    </div>
+</div>
+</body>
+</html>

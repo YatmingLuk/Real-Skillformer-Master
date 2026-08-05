@@ -30,5 +30,7 @@
   "data_workers": 8,
   "log_period": 2,
   "use_z_norm": true,
-  "z_stats_path": "z_stats.pt"
+  "z_stats_path": "z_stats.pt",
+  "vae_ckpt_path": "/home/thsxw/real-Skillformer-master/real-Skillformer-master/pth/trajectory_vae_8d_best.pth",
+  "traj_loss_weight": 2.0
 }

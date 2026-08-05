@@ -28,6 +28,11 @@ class Wayformer(nn.Module):
             self.register_buffer('z_mean', torch.zeros(latent_dim))
             self.register_buffer('z_std', torch.ones(latent_dim))
 
+        # ★ 新增：确保内部 VAE 参数被冻结 (只作为固定解算器) ★
+        if hasattr(self.decoder, 'vae'):
+            for p in self.decoder.vae.parameters():
+                p.requires_grad = False
+
     def regress_skill(self, mappings: List, device) -> Tensor:
         """Regress raw (unnormalized) scene skill latents, [B, latent_dim]."""
         agents = get_from_mapping(mappings, 'agents')
@@ -44,17 +49,36 @@ class Wayformer(nn.Module):
         return mu_gt
     
     def forward(self, mappings: List, device) -> Tensor:
-        """Train one scene-conditioned latent using only skill supervision."""
+        """Train scene-conditioned latent using combined skill and trajectory supervision."""
+        # 1. 预测隐变量 z 与 Ground Truth 隐变量 mu_gt
         z_pred = self.regress_skill(mappings, device)
         mu_gt = self.encode_gt_skill(mappings, device)
 
+        # 2. 计算隐空间 Skill Loss
         if self.config.use_z_norm:
             z_std = torch.clamp(self.z_std, min=1e-4)
-            z_pred = (z_pred - self.z_mean) / z_std
-            mu_gt = (mu_gt - self.z_mean) / z_std
+            z_pred_norm = (z_pred - self.z_mean) / z_std
+            mu_gt_norm = (mu_gt - self.z_mean) / z_std
+            skill_loss = F.mse_loss(z_pred_norm, mu_gt_norm)
+        else:
+            skill_loss = F.mse_loss(z_pred, mu_gt)
 
-        skill_loss = F.mse_loss(z_pred, mu_gt)
-        return skill_loss
+        # 3. 利用原生的 self.decoder.decode 将预测的 z 解码为物理轨迹 [B, 30, 2]
+        pred_trajs = self.decoder.decode(z_pred)
+
+        # 4. 提取 Ground Truth 物理轨迹 [B, 30, 2]
+        labels = np.asarray(get_from_mapping(mappings, 'labels'))
+        gt_trajs = torch.as_tensor(labels, device=device, dtype=torch.float32)[..., :2]
+
+        # 5. 计算物理轨迹空间 Smooth L1 Loss
+        traj_loss = F.smooth_l1_loss(pred_trajs, gt_trajs)
+
+        # 6. 组合联合 Loss
+        traj_weight = getattr(self.config, 'traj_loss_weight', 2.0)
+        total_loss = skill_loss + traj_weight * traj_loss
+        # ================================================================
+
+        return total_loss
     
     @torch.no_grad()
     def predict_skill(self, mappings: List, device) -> Tensor:
