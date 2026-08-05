@@ -109,15 +109,15 @@ Output MP4 videos will be saved in `vis_results/rolling_<token>_iter000-XXX.mp4`
 ### 2. Qualitative Scenario Performance Hierarchy
 Representative scene-level qualitative evaluations across continuous rolling NuPlan validation scenarios:
 
-| Scene Performance Hierarchy | Scenario Type | Index | Skill RMSE ↓ | Mean Prediction ADE ↓ | Visualization Demo Video Path |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| **Excellent** | `stationary` | Index 50 | **0.1163** | **0.0245m** | `vis_results/rolling_367739b91917_iter000-120.mp4` |
-| **Good** | `traversing_traffic_light_intersection` | Index 100 | **0.2498** | **0.4155m** | `vis_results/rolling_69e109f6e2a8_iter000-119.mp4` |
-| **Medium** | `waiting_for_pedestrian_to_cross` | Index 0 | **0.4974** | **0.8332m** | `vis_results/rolling_005fd0f78d2c_iter000-119.mp4` |
-| **Medium** | `waiting_for_pedestrian_to_cross` | Index 20 | **0.5281** | **0.9311m** | `vis_results/rolling_136a2f54e24f_iter000-119.mp4` |
-| **Poor** | `traversing_traffic_light_intersection` | Index 15 | **0.5093** | **1.0310m** | `vis_results/rolling_1004149342b8_iter000-119.mp4` |
-| **Poor** | `traversing_traffic_light_intersection` | Index 200 | **0.5102** | **1.0290m** | `vis_results/rolling_c5fb9629a6ee_iter000-119.mp4` |
-| **Range / Edge Case** | `starting_protected_cross_turn` | Index 5 | **0.7131** | **1.6636m** | `vis_results/rolling_05ef783070ba_iter000-120.mp4` |
+| Scene Performance Hierarchy | Scenario Type | Index | Skill RMSE ↓ | Mean Prediction ADE ↓ | Rolling Prediction Visual Demo |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Excellent** | `stationary` | Index 50 | **0.1163** | **0.0245m** | ![Index 50 Demo](assets/demo_index50.gif) |
+| **Good** | `traversing_traffic_light_intersection` | Index 100 | **0.2498** | **0.4155m** | ![Index 100 Demo](assets/demo_index100.gif) |
+| **Medium** | `waiting_for_pedestrian_to_cross` | Index 0 | **0.4974** | **0.8332m** | ![Index 0 Demo](assets/demo_index0.gif) |
+| **Medium** | `waiting_for_pedestrian_to_cross` | Index 20 | **0.5281** | **0.9311m** | ![Index 20 Demo](assets/demo_index20.gif) |
+| **Poor** | `traversing_traffic_light_intersection` | Index 15 | **0.5093** | **1.0310m** | ![Index 15 Demo](assets/demo_index15.gif) |
+| **Poor** | `traversing_traffic_light_intersection` | Index 200 | **0.5102** | **1.0290m** | ![Index 200 Demo](assets/demo_index200.gif) |
+| **Range / Edge Case** | `starting_protected_cross_turn` | Index 5 | **0.7131** | **1.6636m** | ![Index 5 Demo](assets/demo_index5.gif) |
 
 > 💡 **Note**: The video paths above are relative to the project root directory (`/home/thsxw/real-Skillformer-master/real-Skillformer-master/`). You can open or play them directly using `vlc` or `ffplay`.
 
@@ -148,6 +148,19 @@ Detailed fitting performance across individual Skill dimensions ($z_0 \sim z_7$)
 | :---: | :--- | :---: | :---: | :--- |
 | **Version 2** | Strict Skill-space Constraint | 1.9155m | 0.0195m | Lower Skill RMSE, but higher physical turning offset. |
 | **Version 3** | Optimized decoder mapping & trajectory alignment | **1.6636m** (-13.1%) | 0.0245m | **Significant reduction in physical trajectory ADE for complex turns**, with minor elasticity relaxation in latent space. |
+
+---
+## Analysis of New Model
+### Advantages:
+- **Perform better in Edge Cases**:In the two most accident-prone high-risk scenarios—sharp-angle turns (Index 5) and complex multi-vehicle game intersections (Index 15, 200)—the new model achieved a significant reduction in ADE (Aspect-Definition Error) of around 14%.
+- **Perform better in Physical entity fitting**:The Decoder's ability to transform Skill latent vectors into physical coordinates (x, y trajectories) has been significantly improved.
+
+### Limitations:
+
+- **Skill performance is severely polarized**:The `norm RMSE` is as low as 0.1180–0.1246, and the correlation coefficient `corr` is as high as 0.996. This indicates that the latent space fit is almost perfect for low-dynamic operations such as straight-line driving, cruising, and standing still. However, `Skill 2` had the highest `normal RMSE` at 0.3674; `Skill 7` had a `normal RMSE` of 0.3196, and its correlation coefficient dropped to 0.940 (the lowest in the entire competition).**The two skills often correspond to complex maneuvers such as sharp turns, strong deceleration to avoid obstacles, or frequent lane changes. Networks lack the ability to capture these highly non-linear action clusters.**
+- **The physics error remains high in edge cases**: In the starting_protected_cross_turn scenario (Index 5, protected turn scenario), although ADE has improved from 1.9155m to 1.6636m, in real-world autonomous driving control, a trajectory yaw distance of 1.66m (equivalent to half a lane width) is **still not safe enough**, and **the vehicle still risks crossing the line or cutting off the curve.**
+- **The trade-off between latent space constraints and physical coordinate fitting**: To reduce the ADE in physical space, the new model has led to an overall increase in the Skill RMSE value in latent space (for example, the Skill RMSE in static scenes changes from 0.0525 to 0.1163). This indicates that the decoder currently relies primarily on **sacrificing some latent space smoothness to hard-substitute physical coordinates.**
+---
 ## Key Config
 
 ```json
