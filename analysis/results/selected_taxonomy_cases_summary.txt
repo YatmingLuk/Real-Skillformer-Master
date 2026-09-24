@@ -1,0 +1,36 @@
+==========================================================================
+               FAILURE TAXONOMY COVERAGE REPORT                           
+==========================================================================
+
+Boundary Target Pool     : Rank 20-30 (1700 agents)
+Total Unique Mined Cases : 18 cases
+Deduplication Hierarchy : Complex Interaction -> Maneuvering -> Emerging
+
+--- CATEGORY BREAKDOWN (Post-Deduplication) ---
+  * complex_interaction         : 5  cases
+  * maneuvering_failure         : 3  cases
+  * future_interaction_emerging : 10 cases
+
+--- SELECTED TAXONOMY CASES SUMMARY ---
+Idx  | Scenario Token     | Rank  | Category                     | Raw Score  | Norm Score
+------------------------------------------------------------------------------------------
+1    | 0bd948440a695247   | 20    | complex_interaction          | 6.52       | 0.062     
+2    | 9c38b2f2652a5758   | 26    | complex_interaction          | 5.95       | 0.055     
+3    | 77004a31510d59a4   | 24    | complex_interaction          | 5.70       | 0.052     
+4    | 6c94dd5bf5d05fad   | 28    | complex_interaction          | 5.61       | 0.051     
+5    | 59f8a43c03c05e43   | 24    | complex_interaction          | 5.53       | 0.050     
+6    | 59f8a43c03c05e43   | 23    | maneuvering_failure          | 1.20       | 0.001     
+7    | c65e46581de25b69   | 21    | maneuvering_failure          | 1.08       | 0.000     
+8    | bd6fb6794b4054c3   | 22    | maneuvering_failure          | 1.08       | 0.000     
+9    | 48205abaf8545c93   | 20    | future_interaction_emerging  | 89.51      | 1.000     
+10   | 1f5ba8544d2f50d1   | 29    | future_interaction_emerging  | 78.76      | 0.878     
+11   | 45fd284e98b25b30   | 27    | future_interaction_emerging  | 78.54      | 0.876     
+12   | e2d2ad5d67c15e25   | 25    | future_interaction_emerging  | 77.73      | 0.867     
+13   | de40f321d29c556b   | 29    | future_interaction_emerging  | 77.62      | 0.866     
+14   | f2da1efe0cf3588d   | 23    | future_interaction_emerging  | 77.53      | 0.864     
+15   | 55dda0bf5bd05308   | 29    | future_interaction_emerging  | 76.87      | 0.857     
+16   | a4638efe4ae05edf   | 23    | future_interaction_emerging  | 75.92      | 0.846     
+17   | 9dda4ccd0f515c70   | 23    | future_interaction_emerging  | 75.33      | 0.840     
+18   | 8067e87488d85c41   | 23    | future_interaction_emerging  | 75.03      | 0.836     
+
+==========================================================================

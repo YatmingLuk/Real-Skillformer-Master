@@ -1,0 +1,47 @@
+==================================================
+STEP 1: BASELINE INPUT REPRESENTATION AUDIT
+==================================================
+
+1. Agent Capacity and Occupancy
+--------------------------------
+Total Scenes: 265
+Mean Neighbors: 17.73
+Median Neighbors: 19.0
+Max Neighbors Observed: 19
+Mean Slot Occupancy: 93.31%
+Unused Neighbor Slots: 6.69%
+
+Neighbor Count Distribution (per scene):
+0: 1
+1-5: 5
+6-10: 13
+11-19: 246
+
+2. Effective Retained Neighbor Range & Distance Distribution
+--------------------------------
+Mean Retained Range: 39.06 m
+Median Retained Range: 35.26 m
+Max Retained Range: 78.12 m
+Min Retained Range: 13.45 m
+
+Nearest Neighbor Distance:
+Mean: 6.48 m
+Median: 4.43 m
+
+Individual Neighbor Distance Distribution (all valid neighbors):
+  0-10m   :    881 (18.75%)
+  10-20m  :   1561 (33.23%)
+  20-30m  :   1137 (24.20%)
+  30-50m  :    882 (18.77%)
+  50m+    :    237 ( 5.04%)
+
+3. Agent Dynamic Properties
+--------------------------------
+Total Neighbor Instances: 4698
+Historically Active Neighbors (>1m over 2s): 2507
+Dynamic Neighbor Instance Ratio: 53.36%
+Historically Static Instance Ratio: 46.64%
+Average Dynamic Neighbors / Scene: 9.46
+==================================================
+
+[INFO] Audit report successfully saved to: /home/thsxw/real-Skillformer-master/real-Skillformer-master/analysis/result.txt

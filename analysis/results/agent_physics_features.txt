@@ -1,0 +1,27 @@
+========== Agent Physics Feature Extraction ==========
+
+Total scenes: 6400
+Critical scenes: 4255
+
+Agent Statistics:
+Captured critical agents : 10681
+Missed critical agents   : 2472
+Background agents        : 177949
+
+
+Example Missed Agent:
+{
+  "token": "e33a06dd01485d62",
+  "scenario_token": "0091af376c9a5383",
+  "is_critical": true,
+  "category": "missed",
+  "type": "vehicle",
+  "rank": 25,
+  "d_hist": 22.060375213623047,
+  "d_future_min": 3.3983578028228507,
+  "delta_distance": 18.662017410800196,
+  "future_displacement": 21.59890659944778,
+  "hist_speed": 3.3751447200775146,
+  "future_avg_speed": 3.600211631576911,
+  "heading_change": 0.01631889325970448
+}

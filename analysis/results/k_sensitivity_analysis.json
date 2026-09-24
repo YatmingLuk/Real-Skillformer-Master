@@ -1,0 +1,188 @@
+{
+  "K_curve": {
+    "5": {
+      "K": 5,
+      "scene_mean_coverage": 34.52166978126057,
+      "median_scene_coverage": 20.0,
+      "agent_miss_rate": 74.9790922223067,
+      "scene_failure_rate": 80.04700352526439,
+      "severe_scene_failure_rate": 79.97649823736779,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 9862,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 3406,
+      "total_critical_scenes": 4255
+    },
+    "10": {
+      "K": 10,
+      "scene_mean_coverage": 60.38753812027469,
+      "median_scene_coverage": 60.0,
+      "agent_miss_rate": 49.273929901923516,
+      "scene_failure_rate": 59.694477085781436,
+      "severe_scene_failure_rate": 58.40188014101058,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 6481,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 2540,
+      "total_critical_scenes": 4255
+    },
+    "15": {
+      "K": 15,
+      "scene_mean_coverage": 76.6793251486346,
+      "median_scene_coverage": 100.0,
+      "agent_miss_rate": 29.514179274690182,
+      "scene_failure_rate": 42.67920094007051,
+      "severe_scene_failure_rate": 38.42538190364277,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 3882,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 1816,
+      "total_critical_scenes": 4255
+    },
+    "19": {
+      "K": 19,
+      "scene_mean_coverage": 86.37203584837856,
+      "median_scene_coverage": 100.0,
+      "agent_miss_rate": 18.79419143921539,
+      "scene_failure_rate": 28.71915393654524,
+      "severe_scene_failure_rate": 24.065804935370153,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 2472,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 1222,
+      "total_critical_scenes": 4255
+    },
+    "25": {
+      "K": 25,
+      "scene_mean_coverage": 93.18228083253659,
+      "median_scene_coverage": 100.0,
+      "agent_miss_rate": 9.754428647456855,
+      "scene_failure_rate": 16.944770857814337,
+      "severe_scene_failure_rate": 11.703877790834312,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 1283,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 721,
+      "total_critical_scenes": 4255
+    },
+    "30": {
+      "K": 30,
+      "scene_mean_coverage": 96.23805157308993,
+      "median_scene_coverage": 100.0,
+      "agent_miss_rate": 5.869383410628754,
+      "scene_failure_rate": 10.129259694477085,
+      "severe_scene_failure_rate": 6.650998824911869,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 772,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 431,
+      "total_critical_scenes": 4255
+    },
+    "40": {
+      "K": 40,
+      "scene_mean_coverage": 98.51005370250893,
+      "median_scene_coverage": 100.0,
+      "agent_miss_rate": 2.645784231734205,
+      "scene_failure_rate": 4.159811985898942,
+      "severe_scene_failure_rate": 3.0787309048178613,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 348,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 177,
+      "total_critical_scenes": 4255
+    },
+    "50": {
+      "K": 50,
+      "scene_mean_coverage": 99.22880017956744,
+      "median_scene_coverage": 100.0,
+      "agent_miss_rate": 1.3913175701360907,
+      "scene_failure_rate": 2.09165687426557,
+      "severe_scene_failure_rate": 1.7156286721504113,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 183,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 89,
+      "total_critical_scenes": 4255
+    },
+    "60": {
+      "K": 60,
+      "scene_mean_coverage": 99.57995369951892,
+      "median_scene_coverage": 100.0,
+      "agent_miss_rate": 0.70706302744621,
+      "scene_failure_rate": 1.2220916568742655,
+      "severe_scene_failure_rate": 0.8930669800235017,
+      "max_critical_rank": 97,
+      "p95_critical_rank": 33.0,
+      "missed_agents_count": 93,
+      "total_agents_count": 13153,
+      "failed_scenes_count": 52,
+      "total_critical_scenes": 4255
+    }
+  },
+  "marginal_gain": {
+    "5->10": {
+      "delta_K": 5,
+      "coverage_gain": 25.86586833901412,
+      "coverage_gain_per_K": 5.173173667802824,
+      "scene_failure_reduction": 20.35252643948295,
+      "scene_failure_reduction_per_K": 4.07050528789659
+    },
+    "10->15": {
+      "delta_K": 5,
+      "coverage_gain": 16.291787028359913,
+      "coverage_gain_per_K": 3.2583574056719824,
+      "scene_failure_reduction": 17.015276145710928,
+      "scene_failure_reduction_per_K": 3.4030552291421854
+    },
+    "15->19": {
+      "delta_K": 4,
+      "coverage_gain": 9.692710699743955,
+      "coverage_gain_per_K": 2.423177674935989,
+      "scene_failure_reduction": 13.960047003525268,
+      "scene_failure_reduction_per_K": 3.490011750881317
+    },
+    "19->25": {
+      "delta_K": 6,
+      "coverage_gain": 6.810244984158032,
+      "coverage_gain_per_K": 1.1350408306930053,
+      "scene_failure_reduction": 11.774383078730903,
+      "scene_failure_reduction_per_K": 1.9623971797884838
+    },
+    "25->30": {
+      "delta_K": 5,
+      "coverage_gain": 3.055770740553342,
+      "coverage_gain_per_K": 0.6111541481106684,
+      "scene_failure_reduction": 6.815511163337252,
+      "scene_failure_reduction_per_K": 1.3631022326674505
+    },
+    "30->40": {
+      "delta_K": 10,
+      "coverage_gain": 2.2720021294189934,
+      "coverage_gain_per_K": 0.22720021294189935,
+      "scene_failure_reduction": 5.9694477085781426,
+      "scene_failure_reduction_per_K": 0.5969447708578143
+    },
+    "40->50": {
+      "delta_K": 10,
+      "coverage_gain": 0.7187464770585166,
+      "coverage_gain_per_K": 0.07187464770585165,
+      "scene_failure_reduction": 2.0681551116333723,
+      "scene_failure_reduction_per_K": 0.20681551116333724
+    },
+    "50->60": {
+      "delta_K": 10,
+      "coverage_gain": 0.35115351995148103,
+      "coverage_gain_per_K": 0.035115351995148106,
+      "scene_failure_reduction": 0.8695652173913047,
+      "scene_failure_reduction_per_K": 0.08695652173913046
+    }
+  }
+}

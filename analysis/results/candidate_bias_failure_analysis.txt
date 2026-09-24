@@ -1,0 +1,88 @@
+========== Candidate Bias Failure Pattern Analysis ==========
+
+
+[failure_statistics]
+{
+  "total_critical_scenes": 4255,
+  "scene_failure_cases": 1222,
+  "scene_failure_rate": 28.71915393654524,
+  "severe_scene_failure_cases": 1024,
+  "severe_scene_failure_rate": 24.065804935370153
+}
+
+[coverage_distribution]
+{
+  "mean": 86.37203584837856,
+  "median": 100.0,
+  "distribution": {
+    "0-20%": 186,
+    "20-40%": 90,
+    "40-60%": 335,
+    "60-80%": 413,
+    "80-100%": 198,
+    "100%": 3033
+  }
+}
+
+[critical_complexity]
+{
+  "1_agent": {
+    "count": 1495,
+    "failure": 144,
+    "scene_failure_rate": 9.63210702341137
+  },
+  "2_agents": {
+    "count": 962,
+    "failure": 149,
+    "scene_failure_rate": 15.48856548856549
+  },
+  "3+_agents": {
+    "count": 1798,
+    "failure": 929,
+    "scene_failure_rate": 51.66852057842046
+  }
+}
+
+[candidate_pool_size]
+{
+  "<20": {
+    "count": 1341,
+    "failure": 0,
+    "scene_failure_rate": 0.0
+  },
+  "20-40": {
+    "count": 1986,
+    "failure": 720,
+    "scene_failure_rate": 36.25377643504532
+  },
+  "40-60": {
+    "count": 655,
+    "failure": 325,
+    "scene_failure_rate": 49.61832061068702
+  },
+  "60+": {
+    "count": 273,
+    "failure": 177,
+    "scene_failure_rate": 64.83516483516483
+  }
+}
+
+[agent_type_analysis]
+{
+  "vehicle": {
+    "critical_agents": 11810,
+    "missed_agents": 2378,
+    "agent_miss_rate": 20.135478408128705
+  },
+  "pedestrian_bicycle": {
+    "critical_agents": 1343,
+    "missed_agents": 94,
+    "agent_miss_rate": 6.999255398361877
+  }
+}
+
+[ranking_relation]
+{
+  "coverage_overlap_corr": 0.5888521961017212,
+  "coverage_rho_corr": 0.043380142884502315
+}

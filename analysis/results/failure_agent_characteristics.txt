@@ -1,0 +1,79 @@
+==========================================================================================
+             FAILURE MECHANISM DIAGNOSIS & STATISTICAL ANALYSIS REPORT                    
+==========================================================================================
+
+--- ANALYSIS 1: PHYSICAL FEATURE DISTRIBUTION (Mean ± Std) ---
+Feature              | Captured           | Missed             | Background        
+----------------------------------------------------------------------------------
+d_hist               | 21.08 ± 13.97      | 41.23 ± 15.30      | 31.15 ± 17.75     
+d_future_min         | 4.29 ± 2.76        | 4.94 ± 2.57        | 30.92 ± 17.26     
+delta_distance       | 16.79 ± 14.34      | 36.29 ± 15.58      | 0.23 ± 6.61       
+future_displacement  | 38.98 ± 24.79      | 49.54 ± 19.31      | 8.14 ± 15.78      
+hist_speed           | 5.88 ± 4.35        | 7.33 ± 3.86        | 1.29 ± 2.48       
+future_avg_speed     | 6.52 ± 4.12        | 8.27 ± 3.22        | 1.46 ± 2.60       
+heading_change       | 0.11 ± 0.26        | 0.05 ± 0.12        | 0.18 ± 0.43       
+
+--- DUAL HYPOTHESIS TESTS & EFFECT SIZE (Cohen's d = Missed - Other) ---
+Feature              | Missed vs Captured (d)    | Missed vs Background (d) 
+----------------------------------------------------------------------------
+d_hist               | +1.416 (Large, p=< 0.001 ***) | +0.569 (Medium, p=< 0.001 ***)
+d_future_min         | +0.238 (Small, p=< 0.001 ***) | -1.516 (Large, p=< 0.001 ***)
+delta_distance       | +1.337 (Large, p=< 0.001 ***) | +5.290 (Large, p=< 0.001 ***)
+future_displacement  | +0.443 (Small, p=< 0.001 ***) | +2.615 (Large, p=< 0.001 ***)
+hist_speed           | +0.339 (Small, p=< 0.001 ***) | +2.411 (Large, p=< 0.001 ***)
+future_avg_speed     | +0.440 (Small, p=< 0.001 ***) | +2.604 (Large, p=< 0.001 ***)
+heading_change       | -0.263 (Small, p=< 0.001 ***) | -0.312 (Small, p=< 0.001 ***)
+
+==========================================================================================
+
+--- ANALYSIS 2: RANK vs PHYSICS SPEARMAN CORRELATION ---
+Physics Feature        | Spearman Rho (ρ)   | p-value         | Semantic Interpretation            
+-----------------------------------------------------------------------------------------------
+delta_distance         | +0.6514            | < 0.001 ***     | Lower priority rank -> Higher future dynamics
+future_displacement    | +0.2413            | < 0.001 ***     | Lower priority rank -> Higher future dynamics
+heading_change         | -0.1273            | < 0.001 ***     | Higher priority rank -> Higher future dynamics
+d_future_min           | +0.1259            | < 0.001 ***     | Lower priority rank -> Higher future dynamics
+future_avg_speed       | +0.2398            | < 0.001 ***     | Lower priority rank -> Higher future dynamics
+
+==========================================================================================
+
+--- ANALYSIS 3: RANK BOUNDARY ANALYSIS ---
+Total Critical Agents: 13153 | Total Missed: 2472
+Rank Bucket     | Count      | % of All Critical    | Note                
+----------------------------------------------------------------------
+1-5             | 3291       | 25.02                |                     
+6-10            | 3381       | 25.71                |                     
+11-19           | 4009       | 30.48                | <-- K Budget Boundary
+20-30           | 1700       | 12.92                | <-- Marginal Boundary!
+31-50           | 589        | 4.48                 |                     
+50+             | 183        | 1.39                 |                     
+
+💡 KEY INSIGHT: 68.77% of all Missed Critical Agents fall in Rank 20-30!
+
+==========================================================================================
+
+--- ANALYSIS 4: REFINED DOMAIN-AWARE FAILURE TAXONOMY ---
+[A] Multi-Label Factor Prevalence:
+  * emerging_approaching     : 2331  (94.30%)
+  * high_motion              : 2364  (95.63%)
+  * maneuvering              : 102   (4.13%)
+
+[B] Dominant Category (Mutually Exclusive - Noise Filtered):
+Category                  | Count      | Percentage (%) 
+-------------------------------------------------------
+maneuvering_complex       | 90         | 3.64
+maneuvering_only          | 12         | 0.49
+dynamic_emerging          | 2229       | 90.17
+emerging_only             | 13         | 0.53
+high_motion_only          | 45         | 1.82
+low_dynamic_static        | 83         | 3.36
+
+==========================================================================================
+
+--- ANALYSIS 5: AGENT TYPE FAILURE BREAKDOWN ---
+Agent Type      | Captured   | Missed     | Total      | Miss Rate (%)  
+--------------------------------------------------------------------
+vehicle         | 9432       | 2378       | 11810      | 20.14
+pedestrian_bicycle | 1249       | 94         | 1343       | 7.00
+
+==========================================================================================

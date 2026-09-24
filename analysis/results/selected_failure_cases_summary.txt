@@ -1,0 +1,48 @@
+==========================================================================================
+             FAILURE CASE MINING & SEVERITY BENCHMARK REPORT                              
+==========================================================================================
+
+Target Boundary Pool : Rank 20-30 (1700 agents)
+Fallback Used        : False
+Mining Selection Filter: Future Interaction Emerging OR Maneuvering Failure (>= 0.20 rad)
+Severity Score Formula : 0.55 * Δd + 0.35 * Displacement + 0.10 * HeadingChange
+
+--- CATEGORY COVERAGE DISTRIBUTION (Top-25 Selected Cases) ---
+  * future_interaction_emerging   : 25  (100.0%)
+
+--- MINING EFFICIENCY & PERCENTILE BENCHMARK ---
+Selected Top-25 Mean Severity Score : 0.6975
+Random Boundary Sampling Mean Severity : 0.3303
+🔥 MINING GAIN MULTIPLIER                      : 2.11x Higher Severity
+💡 SEVERITY PERCENTILE (Lower = Higher Severity): Mean Percentile = 0.78% [Worst Case: 1.47%]
+
+--- SELECTED REPRESENTATIVE CASES FOR VISUALIZATION ---
+Idx  | Scenario Token     | Rank  | Bucket  | Failure Category             | Δd(m)   | Disp(m) | Severity
+---------------------------------------------------------------------------------------------------------
+1    | 55dda0bf5bd05308   | 29    | 20-30   | future_interaction_emerging  | 76.6    | 77.2    | 0.734   
+2    | 45fd284e98b25b30   | 27    | 20-30   | future_interaction_emerging  | 73.8    | 85.6    | 0.733   
+3    | 48205abaf8545c93   | 20    | 20-30   | future_interaction_emerging  | 53.8    | 143.1   | 0.727   
+4    | e2d2ad5d67c15e25   | 25    | 20-30   | future_interaction_emerging  | 72.5    | 85.6    | 0.720   
+5    | de40f321d29c556b   | 29    | 20-30   | future_interaction_emerging  | 70.3    | 88.5    | 0.714   
+6    | 19593d7d75c555ee   | 24    | 20-30   | future_interaction_emerging  | 74.1    | 74.9    | 0.712   
+7    | 9be6d4a21601548a   | 21    | 20-30   | future_interaction_emerging  | 74.6    | 75.1    | 0.711   
+8    | f3f1a9f7a235535e   | 20    | 20-30   | future_interaction_emerging  | 73.9    | 76.4    | 0.710   
+9    | d74f9dfdb4125eaf   | 27    | 20-30   | future_interaction_emerging  | 73.9    | 73.6    | 0.703   
+10   | 282f8a6860cb580c   | 20    | 20-30   | future_interaction_emerging  | 73.2    | 75.2    | 0.700   
+11   | 1f5ba8544d2f50d1   | 29    | 20-30   | future_interaction_emerging  | 65.2    | 99.0    | 0.699   
+12   | 0363257f0dd85615   | 25    | 20-30   | future_interaction_emerging  | 72.2    | 77.1    | 0.697   
+13   | 668a7a88374e54f9   | 21    | 20-30   | future_interaction_emerging  | 71.6    | 77.6    | 0.695   
+14   | d0d610488de95e25   | 21    | 20-30   | future_interaction_emerging  | 70.6    | 78.8    | 0.691   
+15   | 07197b13689f5fac   | 22    | 20-30   | future_interaction_emerging  | 71.9    | 75.4    | 0.691   
+16   | a4638efe4ae05edf   | 23    | 20-30   | future_interaction_emerging  | 64.4    | 93.2    | 0.688   
+17   | ec981616c4975d5e   | 24    | 20-30   | future_interaction_emerging  | 71.9    | 73.8    | 0.686   
+18   | 2f64964da4b45438   | 24    | 20-30   | future_interaction_emerging  | 71.6    | 73.9    | 0.684   
+19   | 94d367b095895a0e   | 23    | 20-30   | future_interaction_emerging  | 71.3    | 74.8    | 0.684   
+20   | ba25d2f298fe591c   | 26    | 20-30   | future_interaction_emerging  | 72.0    | 71.1    | 0.683   
+21   | f2da1efe0cf3588d   | 23    | 20-30   | future_interaction_emerging  | 63.0    | 99.3    | 0.683   
+22   | 9dda4ccd0f515c70   | 23    | 20-30   | future_interaction_emerging  | 66.2    | 89.0    | 0.682   
+23   | d9e5a8771e815ac8   | 20    | 20-30   | future_interaction_emerging  | 70.3    | 73.6    | 0.673   
+24   | fedba39693b3589e   | 21    | 20-30   | future_interaction_emerging  | 65.2    | 86.8    | 0.669   
+25   | e3a649044b445579   | 26    | 20-30   | future_interaction_emerging  | 64.7    | 87.5    | 0.668   
+
+==========================================================================================
